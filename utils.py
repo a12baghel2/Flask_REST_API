@@ -1,55 +1,31 @@
-import csv
 import json
-from typing import List
+from typing import List, Dict
 
 
-def search_csv_file(files_to_search: List[str], **kwargs) -> str:
+def search_json_files(files_to_search: List[str], **kwargs) -> List[Dict[str, str]]:
     """
     Returns a list of rows that match the given parameters
     """
     matching_rows = []
     for filepath in files_to_search:
-        with open(filepath) as csv_file:
-            reader = csv.DictReader(csv_file)
+        with open(filepath) as json_file:
+            reader = json.load(json_file)
             for row in reader:
+                row = reader[row]
                 for key, value in kwargs.items():
                     if type(value) == int:
                         value = str(value)
 
-                    if key in row.keys() and row[key] == value:
+                    if key in row.keys() and value.lower() in row[key].lower():
                         matching_rows.append(row)
 
-    return json.dumps(matching_rows)
+    return matching_rows
 
 
-def search_characters(**kwargs) -> str:
-    return search_csv_file(["./data/characters.csv"], **kwargs)
-
-
-def search_planets(**kwargs) -> str:
-    return search_csv_file(["./data/planets.csv"], **kwargs)
-
-
-def search_starships(**kwargs) -> str:
-    return search_csv_file(["./data/starships.csv"], **kwargs)
-
-
-def search_species(**kwargs) -> str:
-    return search_csv_file(["./data/species.csv"], **kwargs)
-
-
-def search_vehicles(**kwargs) -> str:
-    return search_csv_file(["./data/vehicles.csv"], **kwargs)
-
-
-def search_all(**kwargs) -> str:
-    return search_csv_file(
-        [
-            "./data/vehicles.csv",
-            "./data/species.csv",
-            "./data/starships.csv",
-            "./data/planets.csv",
-            "./data/characters.csv",
-        ],
-        **kwargs
+def search(entity_type: str = 'any', **kwargs) -> List[Dict[str, str]]:
+    entity_types = ['vehicles', 'species', 'starships', 'planets', 'characters']
+    if entity_type == 'any':
+        return search_json_files([f'./data/{t}.json' for t in entity_types], **kwargs)
+    return search_json_files(
+        [f'./data/{t}.json' for t in entity_types if entity_type == t] if entity_type != 'all' else [], **kwargs
     )
