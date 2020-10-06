@@ -3,7 +3,7 @@ from markupsafe import escape
 import pandas as pd
 import utils
 import json
-from convert import data
+import convert
 
 app = Flask(__name__)
 
@@ -15,15 +15,10 @@ def hello():
 def about():
     return render_template("about.html")
 
-@app.route('/all')
-def alllist():
-    return data
-
-
 @app.route('/search/')
 def search():
-    entity_type = request.args.get('type') if request.args.get('type') is not None else 'any'
-    return jsonify(utils.search(entity_type, **dict(request.args)))
+    entity_type = request.args.get('key','')
+    return jsonify(convert.requestedData(entity_type))
 
 @app.errorhandler(404)
 def page_not_found(error):

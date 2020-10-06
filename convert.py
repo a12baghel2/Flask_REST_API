@@ -1,19 +1,15 @@
 import csv
 import json
 
-csvFilePath = './data/vehicles.csv'
-jsonfilepath = './data/vehicles.json'
+def requestedData(value):
+    filepath = f'./data/JSON/{value}.json'
+    with open(filepath) as f:
+        data = json.load(f)
+    return data
 
-data = {}
-count = 0
-with open(csvFilePath) as csvFile:
-    csvReader = csv.DictReader(csvFile)
-    for rows in csvReader:
-        id = count
-        data[id] = rows
-        count += 1
 
-print(data)
 
-with open(jsonfilepath, "w") as jsonFile:
-    jsonFile.write(json.dumps(data,indent=4))
+
+
+
+

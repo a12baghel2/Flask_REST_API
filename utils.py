@@ -25,7 +25,7 @@ def search_json_files(files_to_search: List[str], **kwargs) -> List[Dict[str, st
 def search(entity_type: str = 'any', **kwargs) -> List[Dict[str, str]]:
     entity_types = ['vehicles', 'species', 'starships', 'planets', 'characters']
     if entity_type == 'any':
-        return search_json_files([f'./data/{t}.json' for t in entity_types], **kwargs)
+        return search_json_files([f'./data/JSON/{t}.json' for t in entity_types], **kwargs)
     return search_json_files(
-        [f'./data/{t}.json' for t in entity_types if entity_type == t] if entity_type != 'all' else [], **kwargs
+        [f'./data/JSON/{t}.json' for t in entity_types if entity_type == t] if entity_type != 'all' else [], **kwargs
     )

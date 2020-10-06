@@ -1,0 +1,7 @@
+{
+    "characters " : "key = characters",
+    "planets" : "key = planets",
+    "species" : "key = species",
+    "starships" : "key = starships",
+    "vehicles" : "key = vehicles"
+}
