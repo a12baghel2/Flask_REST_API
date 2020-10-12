@@ -13,8 +13,9 @@ def hello():
 
 @app.route('/search/')
 def search():
-    entity_type = request.args.get('key','')
-    return jsonify(convert.requestedData(entity_type))
+    entity_type = request.args.get('key')
+    entity_id = request.args.get('id')
+    return jsonify(convert.requestedData(entity_type,entity_id))
 
 @app.errorhandler(404)
 def page_not_found(error):
