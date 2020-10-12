@@ -1,9 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from markupsafe import escape
-import pandas as pd
-import utils
 import json
-import convert
+import utils
 
 app = Flask(__name__)
 
@@ -15,7 +13,7 @@ def hello():
 def search():
     entity_type = request.args.get('key')
     entity_id = request.args.get('id')
-    return jsonify(convert.requestedData(entity_type,entity_id))
+    return jsonify(utils.requestedData(entity_type,entity_id))
 
 @app.errorhandler(404)
 def page_not_found(error):
