@@ -9,7 +9,7 @@ app = Flask(__name__)
 def hello():
     return render_template("index.html")
 
-@app.route('/search/')
+@app.route('/api/search/')
 def search():
     entity_type = request.args.get('key')
     entity_id = request.args.get('id')
